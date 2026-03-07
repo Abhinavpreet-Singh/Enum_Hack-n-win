@@ -1,0 +1,24 @@
+{
+  "name": "web-page-evaluation-engine",
+  "version": "1.0.0",
+  "description": "Node.js evaluation engine comparing expected design vs student submission using Playwright",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "cli": "node src/index.js"
+  },
+  "dependencies": {
+    "esbuild": "^0.18.20",
+    "express": "^4.22.1",
+    "playwright": "^1.40.0"
+  },
+  "keywords": [
+    "playwright",
+    "web-comparison",
+    "evaluation"
+  ],
+  "author": "",
+  "license": "MIT"
+}

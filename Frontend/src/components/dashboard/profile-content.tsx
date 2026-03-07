@@ -15,7 +15,6 @@ import {
   PlayCircle,
   Star,
   Camera,
-  ExternalLink,
   X,
   Save,
   GraduationCap,
@@ -75,17 +74,17 @@ function generateHeatmapData() {
 function heatColor(level: number): string {
   switch (level) {
     case 0:
-      return "bg-gray-100 border border-gray-200";
+      return "bg-gray-100 border border-gray-200 dark:bg-white/5 dark:border-white/8";
     case 1:
-      return "bg-gray-300";
+      return "bg-gray-300 dark:bg-white/20";
     case 2:
-      return "bg-gray-500";
+      return "bg-gray-500 dark:bg-white/40";
     case 3:
-      return "bg-gray-700";
+      return "bg-gray-700 dark:bg-white/65";
     case 4:
-      return "bg-gray-900";
+      return "bg-gray-900 dark:bg-white";
     default:
-      return "bg-gray-100 border border-gray-200";
+      return "bg-gray-100 border border-gray-200 dark:bg-white/5 dark:border-white/8";
   }
 }
 
@@ -418,13 +417,13 @@ export default function ProfileContent() {
       <div className="flex gap-1.5">
         <button
           onClick={cancelSection}
-          className="flex items-center gap-1 px-2 py-1 border border-gray-200 rounded-md font-mono text-[10px] text-gray-500 hover:border-black transition-all"
+          className="flex items-center gap-1 px-2 py-1 border border-gray-200 dark:border-white/10 font-mono text-[10px] text-gray-500 dark:text-gray-400 hover:border-black dark:hover:border-white transition-all"
         >
           <X className="w-3 h-3" /> Cancel
         </button>
         <button
           onClick={saveSection}
-          className="flex items-center gap-1 px-2 py-1 bg-black rounded-md font-mono text-[10px] text-white hover:bg-gray-800 transition-all"
+          className="flex items-center gap-1 px-2 py-1 bg-black dark:bg-white dark:text-black font-mono text-[10px] text-white hover:bg-gray-800 dark:hover:bg-white/90 transition-all"
         >
           <Save className="w-3 h-3" /> Save
         </button>
@@ -432,7 +431,7 @@ export default function ProfileContent() {
     ) : (
       <button
         onClick={() => startEdit(section)}
-        className="w-5 h-5 rounded-md border border-gray-200 flex items-center justify-center text-gray-400 hover:border-black hover:text-black transition-all"
+        className="w-5 h-5 border border-gray-200 dark:border-white/10 flex items-center justify-center text-gray-400 dark:text-gray-500 hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white transition-all"
       >
         <Edit3 className="w-3 h-3" />
       </button>
@@ -456,14 +455,21 @@ export default function ProfileContent() {
           {/* LEFT: Profile card */}
           <div className="space-y-4">
             {/* Identity card */}
-            <div className="border border-gray-200 rounded-xl p-6 bg-white/90 backdrop-blur-sm space-y-4">
+            <div className="border border-gray-200 dark:border-white/8 bg-white/90 dark:bg-[#111] overflow-hidden">
+              {/* Profile banner */}
+              <div className="h-20 bg-linear-to-br from-gray-900 via-gray-700 to-black dark:from-zinc-950 dark:via-white/8 dark:to-black relative overflow-hidden">
+                <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(ellipse at 25% 60%, rgba(255,255,255,0.12) 0%, transparent 65%)" }} />
+                <div className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-white/20 to-transparent" />
+              </div>
+              {/* Card content */}
+              <div className="px-6 pb-6 space-y-4">
               {/* Avatar — always clickable */}
-              <div className="flex flex-col items-center gap-3">
+              <div className="flex flex-col items-center gap-3 -mt-10">
                 <div
                   className="relative group cursor-pointer"
                   onClick={() => fileInputRef.current?.click()}
                 >
-                  <div className="w-20 h-20 rounded-full bg-gray-900 flex items-center justify-center overflow-hidden ring-2 ring-gray-200 group-hover:ring-black transition-all">
+                  <div className="w-24 h-24 rounded-full bg-gray-900 flex items-center justify-center overflow-hidden ring-4 ring-white dark:ring-[#111] shadow-md group-hover:shadow-xl transition-all border border-gray-200 dark:border-white/10">
                     {avatarSrc ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
@@ -472,7 +478,7 @@ export default function ProfileContent() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <span className="text-white text-3xl font-bold select-none">
+                      <span className="text-white text-4xl font-bold select-none">
                         {profile.name.charAt(0).toUpperCase()}
                       </span>
                     )}
@@ -495,7 +501,7 @@ export default function ProfileContent() {
                     <div className="flex items-center justify-center gap-1.5">
                       <input
                         autoFocus
-                        className="text-center text-xl font-bold text-black border-b-2 border-black outline-none bg-transparent w-40"
+                        className="text-center text-xl font-bold text-black dark:text-white border-b-2 border-black dark:border-white outline-none bg-transparent w-40"
                         value={draftName}
                         onChange={(e) => setDraftName(e.target.value)}
                         onKeyDown={(e) => {
@@ -505,20 +511,20 @@ export default function ProfileContent() {
                       />
                       <button
                         onClick={() => saveName(draftName)}
-                        className="p-0.5 rounded bg-black text-white hover:bg-gray-800 transition-colors"
+                        className="p-0.5 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-white/90 transition-colors"
                       >
                         <Save className="w-3 h-3" />
                       </button>
                       <button
                         onClick={() => setEditingName(false)}
-                        className="p-0.5 rounded border border-gray-300 text-gray-500 hover:border-black transition-colors"
+                        className="p-0.5 border border-gray-300 dark:border-white/15 text-gray-500 dark:text-gray-400 hover:border-black dark:hover:border-white transition-colors"
                       >
                         <X className="w-3 h-3" />
                       </button>
                     </div>
                   ) : (
                     <div className="relative inline-flex items-center justify-center group">
-                      <h2 className="text-xl font-bold text-black">
+                      <h2 className="text-xl font-bold text-black dark:text-white">
                         {profile.name}
                       </h2>
                       <button
@@ -526,7 +532,7 @@ export default function ProfileContent() {
                           setDraftName(profile.name);
                           setEditingName(true);
                         }}
-                        className="absolute -right-6 opacity-0 group-hover:opacity-100 transition-opacity w-5 h-5 rounded border border-gray-200 flex items-center justify-center text-gray-400 hover:border-black hover:text-black"
+                        className="absolute -right-6 opacity-0 group-hover:opacity-100 transition-opacity w-5 h-5 border border-gray-200 dark:border-white/10 flex items-center justify-center text-gray-400 dark:text-gray-500 hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white"
                       >
                         <Edit3 className="w-3 h-3" />
                       </button>
@@ -547,7 +553,7 @@ export default function ProfileContent() {
               </div>
 
               {/* ABOUT — role, college, location */}
-              <div className="space-y-2 pt-2 border-t border-gray-100">
+              <div className="space-y-2 pt-2 border-t border-gray-100 dark:border-white/8">
                 <div className="flex items-center justify-between">
                   <p className="font-mono text-[10px] tracking-widest text-gray-400">
                     ABOUT
@@ -559,7 +565,7 @@ export default function ProfileContent() {
                     <div className="flex items-center gap-2">
                       <Building2 className="w-4 h-4 text-gray-300 shrink-0" />
                       <input
-                        className="flex-1 font-mono text-xs border-b border-gray-200 focus:border-black outline-none pb-0.5 bg-transparent text-gray-700"
+                        className="flex-1 font-mono text-xs border-b border-gray-200 dark:border-white/10 focus:border-black dark:focus:border-white outline-none pb-0.5 bg-transparent text-gray-700 dark:text-gray-200"
                         value={draft.role}
                         onChange={(e) =>
                           setDraft((d) => ({ ...d, role: e.target.value }))
@@ -570,7 +576,7 @@ export default function ProfileContent() {
                     <div className="flex items-center gap-2">
                       <GraduationCap className="w-4 h-4 text-gray-300 shrink-0" />
                       <input
-                        className="flex-1 font-mono text-xs border-b border-gray-200 focus:border-black outline-none pb-0.5 bg-transparent text-gray-700"
+                        className="flex-1 font-mono text-xs border-b border-gray-200 dark:border-white/10 focus:border-black dark:focus:border-white outline-none pb-0.5 bg-transparent text-gray-700 dark:text-gray-200"
                         value={draft.college}
                         onChange={(e) =>
                           setDraft((d) => ({ ...d, college: e.target.value }))
@@ -581,7 +587,7 @@ export default function ProfileContent() {
                     <div className="flex items-center gap-2">
                       <MapPin className="w-4 h-4 text-gray-300 shrink-0" />
                       <input
-                        className="flex-1 font-mono text-xs border-b border-gray-200 focus:border-black outline-none pb-0.5 bg-transparent text-gray-700"
+                        className="flex-1 font-mono text-xs border-b border-gray-200 dark:border-white/10 focus:border-black dark:focus:border-white outline-none pb-0.5 bg-transparent text-gray-700 dark:text-gray-200"
                         value={draft.location}
                         onChange={(e) =>
                           setDraft((d) => ({ ...d, location: e.target.value }))
@@ -595,7 +601,7 @@ export default function ProfileContent() {
                     {profile.role && (
                       <div className="flex items-center gap-2">
                         <Building2 className="w-3.5 h-3.5 text-gray-300" />
-                        <span className="font-mono text-xs text-gray-600">
+                        <span className="font-mono text-xs text-gray-600 dark:text-gray-300">
                           {profile.role}
                         </span>
                       </div>
@@ -603,7 +609,7 @@ export default function ProfileContent() {
                     {profile.college && (
                       <div className="flex items-center gap-2">
                         <GraduationCap className="w-3.5 h-3.5 text-gray-300" />
-                        <span className="font-mono text-xs text-gray-600">
+                        <span className="font-mono text-xs text-gray-600 dark:text-gray-300">
                           {profile.college}
                         </span>
                       </div>
@@ -611,7 +617,7 @@ export default function ProfileContent() {
                     {profile.location && (
                       <div className="flex items-center gap-2">
                         <MapPin className="w-3.5 h-3.5 text-gray-300" />
-                        <span className="font-mono text-xs text-gray-600">
+                        <span className="font-mono text-xs text-gray-600 dark:text-gray-300">
                           {profile.location}
                         </span>
                       </div>
@@ -626,7 +632,7 @@ export default function ProfileContent() {
               </div>
 
               {/* BIO */}
-              <div className="space-y-1.5 pt-2 border-t border-gray-100">
+              <div className="space-y-1.5 pt-2 border-t border-gray-100 dark:border-white/8">
                 <div className="flex items-center justify-between">
                   <p className="font-mono text-[10px] tracking-widest text-gray-400">
                     BIO
@@ -636,7 +642,7 @@ export default function ProfileContent() {
                 {editingSection === "bio" ? (
                   <textarea
                     rows={3}
-                    className="w-full font-mono text-xs text-gray-700 border border-gray-200 rounded-lg p-2.5 focus:border-black outline-none bg-transparent resize-none"
+                    className="w-full font-mono text-xs text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-white/10 p-2.5 focus:border-black dark:focus:border-white outline-none bg-transparent dark:bg-transparent resize-none"
                     value={draft.bio}
                     onChange={(e) =>
                       setDraft((d) => ({ ...d, bio: e.target.value }))
@@ -644,7 +650,7 @@ export default function ProfileContent() {
                     placeholder="Write a short bio..."
                   />
                 ) : (
-                  <p className="font-mono text-xs text-gray-600 leading-relaxed">
+                  <p className="font-mono text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
                     {profile.bio || (
                       <span className="text-gray-300 italic">
                         No bio yet...
@@ -654,7 +660,7 @@ export default function ProfileContent() {
                 )}
               </div>
               {/* SKILLS — always inline editable */}
-              <div className="space-y-2 pt-2 border-t border-gray-100">
+              <div className="space-y-2 pt-2 border-t border-gray-100 dark:border-white/8">
                 <p className="font-mono text-[10px] tracking-widest text-gray-400">
                   SKILLS
                 </p>
@@ -662,7 +668,7 @@ export default function ProfileContent() {
                   {profile.skills.map((sk) => (
                     <span
                       key={sk}
-                      className="flex items-center gap-1 px-2 py-0.5 bg-gray-900 text-white font-mono text-[10px] rounded-md"
+                      className="flex items-center gap-1 px-2.5 py-1 bg-linear-to-r from-gray-800 to-gray-950 dark:from-white/12 dark:to-white/6 text-white dark:text-gray-100 font-mono text-[10px] rounded-full shadow-sm"
                     >
                       {sk}
                       <button
@@ -676,7 +682,7 @@ export default function ProfileContent() {
                 </div>
                 <div className="flex gap-1.5">
                   <input
-                    className="flex-1 font-mono text-xs border-b border-gray-200 focus:border-black outline-none pb-0.5 bg-transparent text-gray-700"
+                    className="flex-1 font-mono text-xs border-b border-gray-200 dark:border-white/10 focus:border-black dark:focus:border-white outline-none pb-0.5 bg-transparent text-gray-700 dark:text-gray-200"
                     value={newSkill}
                     onChange={(e) => setNewSkill(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && addSkill()}
@@ -684,14 +690,14 @@ export default function ProfileContent() {
                   />
                   <button
                     onClick={addSkill}
-                    className="text-gray-400 hover:text-black transition-colors"
+                    className="text-gray-400 hover:text-black dark:hover:text-white transition-colors"
                   >
                     <Plus className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>
               {/* LINKS + RESUME */}
-              <div className="space-y-2 pt-2 border-t border-gray-100">
+              <div className="space-y-2 pt-2 border-t border-gray-100 dark:border-white/8">
                 <div className="flex items-center justify-between">
                   <p className="font-mono text-[10px] tracking-widest text-gray-400">
                     LINKS
@@ -711,7 +717,7 @@ export default function ProfileContent() {
                         <div key={key} className="flex items-center gap-2">
                           <Icon className="w-3.5 h-3.5 text-gray-300 shrink-0" />
                           <input
-                            className="flex-1 font-mono text-xs border-b border-gray-200 focus:border-black outline-none pb-0.5 bg-transparent text-gray-700"
+                            className="flex-1 font-mono text-xs border-b border-gray-200 dark:border-white/10 focus:border-black dark:focus:border-white outline-none pb-0.5 bg-transparent text-gray-700 dark:text-gray-200"
                             value={draft.links[key]}
                             onChange={(e) =>
                               setDraft((d) => ({
@@ -731,7 +737,7 @@ export default function ProfileContent() {
                     <div className="flex items-center gap-2">
                       <FileText className="w-3.5 h-3.5 text-gray-300 shrink-0" />
                       <input
-                        className="flex-1 font-mono text-xs border-b border-gray-200 focus:border-black outline-none pb-0.5 bg-transparent text-gray-700"
+                        className="flex-1 font-mono text-xs border-b border-gray-200 dark:border-white/10 focus:border-black dark:focus:border-white outline-none pb-0.5 bg-transparent text-gray-700 dark:text-gray-200"
                         value={draft.resume}
                         onChange={(e) =>
                           setDraft((d) => ({ ...d, resume: e.target.value }))
@@ -741,16 +747,15 @@ export default function ProfileContent() {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-wrap gap-2">
                     {profile.links.github && (
                       <a
                         href={profile.links.github}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex items-center gap-1 font-mono text-xs text-gray-500 hover:text-black transition-colors"
+                        className="flex items-center gap-1.5 font-mono text-[10px] px-3 py-1.5 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:border-gray-900 dark:hover:border-white hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all"
                       >
-                        <Github className="w-3.5 h-3.5" /> GitHub{" "}
-                        <ExternalLink className="w-3 h-3" />
+                        <Github className="w-3 h-3" /> GitHub
                       </a>
                     )}
                     {profile.links.linkedin && (
@@ -758,10 +763,9 @@ export default function ProfileContent() {
                         href={profile.links.linkedin}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex items-center gap-1 font-mono text-xs text-gray-500 hover:text-black transition-colors"
+                        className="flex items-center gap-1.5 font-mono text-[10px] px-3 py-1.5 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:border-gray-900 dark:hover:border-white hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all"
                       >
-                        <Linkedin className="w-3.5 h-3.5" /> LinkedIn{" "}
-                        <ExternalLink className="w-3 h-3" />
+                        <Linkedin className="w-3 h-3" /> LinkedIn
                       </a>
                     )}
                     {profile.links.website && (
@@ -769,10 +773,9 @@ export default function ProfileContent() {
                         href={profile.links.website}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex items-center gap-1 font-mono text-xs text-gray-500 hover:text-black transition-colors"
+                        className="flex items-center gap-1.5 font-mono text-[10px] px-3 py-1.5 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:border-gray-900 dark:hover:border-white hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all"
                       >
-                        <Globe className="w-3.5 h-3.5" /> Website{" "}
-                        <ExternalLink className="w-3 h-3" />
+                        <Globe className="w-3 h-3" /> Website
                       </a>
                     )}
                     {profile.resume && (
@@ -780,10 +783,9 @@ export default function ProfileContent() {
                         href={profile.resume}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex items-center gap-1 font-mono text-xs text-gray-500 hover:text-black transition-colors"
+                        className="flex items-center gap-1.5 font-mono text-[10px] px-3 py-1.5 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:border-gray-900 dark:hover:border-white hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all"
                       >
-                        <FileText className="w-3.5 h-3.5" /> Resume{" "}
-                        <ExternalLink className="w-3 h-3" />
+                        <FileText className="w-3 h-3" /> Resume
                       </a>
                     )}
                     {!profile.links.github &&
@@ -797,10 +799,11 @@ export default function ProfileContent() {
                   </div>
                 )}
               </div>
+              </div>
             </div>
 
             {/* Certifications */}
-            <div className="border border-gray-200 rounded-xl p-5 bg-white/90 backdrop-blur-sm">
+            <div className="border border-gray-200 dark:border-white/8 p-5 bg-white/90 dark:bg-[#111]">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-1.5">
                   <Star className="w-3 h-3 text-gray-400" />
@@ -810,7 +813,7 @@ export default function ProfileContent() {
                 </div>
                 <button
                   onClick={() => setAddingCert(true)}
-                  className="w-5 h-5 rounded-md border border-gray-200 flex items-center justify-center text-gray-400 hover:border-black hover:text-black transition-all"
+                  className="w-5 h-5 border border-gray-200 dark:border-white/10 flex items-center justify-center text-gray-400 dark:text-gray-500 hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white transition-all"
                 >
                   <Plus className="w-3 h-3" />
                 </button>
@@ -822,14 +825,14 @@ export default function ProfileContent() {
                     className={`flex items-start gap-2.5 group ${!c.done ? "opacity-50" : ""}`}
                   >
                     <div
-                      className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5 ${c.done ? "bg-gray-900" : "border border-gray-200"}`}
+                      className={`w-5 h-5 flex items-center justify-center shrink-0 mt-0.5 ${c.done ? "bg-gray-900 dark:bg-white" : "border border-gray-200 dark:border-white/10"}`}
                     >
                       <Star
-                        className={`w-3 h-3 ${c.done ? "text-white" : "text-gray-300"}`}
+                        className={`w-3 h-3 ${c.done ? "text-white dark:text-black" : "text-gray-300"}`}
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-mono text-xs text-gray-800 font-medium truncate">
+                      <p className="font-mono text-xs text-gray-800 dark:text-white font-medium truncate">
                         {c.name}
                       </p>
                       <p className="font-mono text-[10px] text-gray-400">
@@ -842,17 +845,17 @@ export default function ProfileContent() {
                         setCerts(updated);
                         persistCerts(updated);
                       }}
-                      className="opacity-0 group-hover:opacity-100 text-gray-300 hover:text-black transition-all mt-0.5"
+                      className="opacity-0 group-hover:opacity-100 text-gray-300 hover:text-black dark:hover:text-white transition-all mt-0.5"
                     >
                       <Trash2 className="w-3 h-3" />
                     </button>
                   </div>
                 ))}
                 {addingCert && (
-                  <div className="space-y-2 pt-2 border-t border-gray-100">
+                  <div className="space-y-2 pt-2 border-t border-gray-100 dark:border-white/8">
                     <input
                       autoFocus
-                      className="w-full font-mono text-xs border-b border-gray-200 focus:border-black outline-none pb-0.5 bg-transparent text-gray-700"
+                      className="w-full font-mono text-xs border-b border-gray-200 dark:border-white/10 focus:border-black dark:focus:border-white outline-none pb-0.5 bg-transparent text-gray-700 dark:text-gray-200"
                       value={newCert.name}
                       onChange={(e) =>
                         setNewCert((c) => ({ ...c, name: e.target.value }))
@@ -860,7 +863,7 @@ export default function ProfileContent() {
                       placeholder="Certificate name"
                     />
                     <input
-                      className="w-full font-mono text-xs border-b border-gray-200 focus:border-black outline-none pb-0.5 bg-transparent text-gray-700"
+                      className="w-full font-mono text-xs border-b border-gray-200 dark:border-white/10 focus:border-black dark:focus:border-white outline-none pb-0.5 bg-transparent text-gray-700 dark:text-gray-200"
                       value={newCert.issuer}
                       onChange={(e) =>
                         setNewCert((c) => ({ ...c, issuer: e.target.value }))
@@ -868,7 +871,7 @@ export default function ProfileContent() {
                       placeholder="Issuer"
                     />
                     <input
-                      className="w-full font-mono text-xs border-b border-gray-200 focus:border-black outline-none pb-0.5 bg-transparent text-gray-700"
+                      className="w-full font-mono text-xs border-b border-gray-200 dark:border-white/10 focus:border-black dark:focus:border-white outline-none pb-0.5 bg-transparent text-gray-700 dark:text-gray-200"
                       value={newCert.date}
                       onChange={(e) =>
                         setNewCert((c) => ({ ...c, date: e.target.value }))
@@ -878,13 +881,13 @@ export default function ProfileContent() {
                     <div className="flex gap-2 pt-1">
                       <button
                         onClick={submitCert}
-                        className="flex-1 font-mono text-[11px] py-1 bg-gray-900 text-white rounded-md hover:bg-black transition-colors"
+                        className="flex-1 font-mono text-[11px] py-1 bg-gray-900 dark:bg-white text-white dark:text-black hover:bg-black dark:hover:bg-white/90 transition-colors"
                       >
                         Add
                       </button>
                       <button
                         onClick={() => setAddingCert(false)}
-                        className="flex-1 font-mono text-[11px] py-1 border border-gray-200 rounded-md text-gray-500 hover:border-black transition-colors"
+                        className="flex-1 font-mono text-[11px] py-1 border border-gray-200 dark:border-white/10 text-gray-500 dark:text-gray-400 hover:border-black dark:hover:border-white transition-colors"
                       >
                         Cancel
                       </button>
@@ -902,31 +905,42 @@ export default function ProfileContent() {
                   label: "Problems Solved",
                   value: stats.totalProblems > 0 ? stats.totalProblems : "--",
                   icon: Code2,
+                  accent: "text-blue-500 dark:text-blue-400",
+                  bar: "bg-blue-500/30 dark:bg-blue-400/30",
                 },
                 {
                   label: "Simulations",
                   value:
                     stats.totalSimulations > 0 ? stats.totalSimulations : "--",
                   icon: PlayCircle,
+                  accent: "text-violet-500 dark:text-violet-400",
+                  bar: "bg-violet-500/30 dark:bg-violet-400/30",
                 },
                 {
                   label: "Max Streak",
                   value:
                     stats.longestStreak > 0 ? `${stats.longestStreak}d` : "--",
                   icon: Star,
+                  accent: "text-amber-500 dark:text-amber-400",
+                  bar: "bg-amber-500/30 dark:bg-amber-400/30",
                 },
                 {
                   label: "Global Rank",
                   value: stats.globalRank ? `#${stats.globalRank}` : "--",
                   icon: Trophy,
+                  accent: "text-emerald-500 dark:text-emerald-400",
+                  bar: "bg-emerald-500/30 dark:bg-emerald-400/30",
                 },
-              ].map(({ label, value, icon: Icon }) => (
+              ].map(({ label, value, icon: Icon, accent, bar }) => (
                 <div
                   key={label}
-                  className="border border-gray-200 rounded-xl p-4 bg-white/90 backdrop-blur-sm hover:border-black transition-all"
+                  className="border border-gray-200 dark:border-white/8 p-4 bg-white/90 dark:bg-[#111] hover:border-black dark:hover:border-white/20 transition-all relative overflow-hidden"
                 >
-                  <Icon className="w-4 h-4 text-gray-300 mb-2" />
-                  <p className="text-2xl font-bold text-black">{value}</p>
+                  <div className={`absolute top-0 left-0 right-0 h-0.5 ${bar}`} />
+                  <Icon className={`w-4 h-4 ${accent} mb-2`} />
+                  <p className="text-2xl font-bold text-black dark:text-white">
+                    {value}
+                  </p>
                   <p className="font-mono text-[11px] text-gray-400 mt-0.5">
                     {label}
                   </p>
@@ -935,27 +949,29 @@ export default function ProfileContent() {
             </div>
 
             {/* Streak Heatmap */}
-            <div className="border border-gray-200 rounded-xl p-5 bg-white/90 backdrop-blur-sm">
+            <div className="border border-gray-200 dark:border-white/8 p-5 bg-white/90 dark:bg-[#111]">
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <p className="font-mono text-[10px] tracking-widest text-gray-400">
                     ACTIVITY HEATMAP
                   </p>
-                  <p className="text-sm font-bold text-black mt-0.5">
-                    {stats.currentStreak > 0
-                      ? `${stats.currentStreak}-day current streak`
-                      : "Start your streak today"}
-                  </p>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    {stats.currentStreak > 0 && (
+                      <Flame className="w-4 h-4 text-orange-500" />
+                    )}
+                    <p className="text-sm font-bold text-black dark:text-white">
+                      {stats.currentStreak > 0
+                        ? `${stats.currentStreak}-day current streak`
+                        : "Start your streak today"}
+                    </p>
+                  </div>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="font-mono text-[10px] text-gray-400">
                     Less
                   </span>
                   {[0, 1, 2, 3, 4].map((l) => (
-                    <div
-                      key={l}
-                      className={`w-3 h-3 rounded-sm ${heatColor(l)}`}
-                    />
+                    <div key={l} className={`w-3 h-3 ${heatColor(l)}`} />
                   ))}
                   <span className="font-mono text-[10px] text-gray-400">
                     More
@@ -1000,7 +1016,7 @@ export default function ProfileContent() {
                           <div
                             key={di}
                             title={`${level} problem${level !== 1 ? "s" : ""}`}
-                            className={`w-3 h-3 rounded-sm ${heatColor(level)} hover:ring-1 hover:ring-gray-400 cursor-default`}
+                            className={`w-3 h-3 ${heatColor(level)} hover:ring-1 hover:ring-gray-400 dark:hover:ring-white/30 cursor-default`}
                           />
                         ))}
                       </div>
@@ -1011,7 +1027,7 @@ export default function ProfileContent() {
             </div>
 
             {/* Badges */}
-            <div className="border border-gray-200 rounded-xl p-5 bg-white/90 backdrop-blur-sm space-y-5">
+            <div className="border border-gray-200 dark:border-white/8 p-5 bg-white/90 dark:bg-[#111] space-y-5">
               {/* ── Streak track ── */}
               <div>
                 <div className="flex items-center gap-1.5 mb-3">
@@ -1024,14 +1040,14 @@ export default function ProfileContent() {
                   {STREAK_BADGES.map(({ day, label, unlocked }) => (
                     <div
                       key={day}
-                      className={`group flex flex-col items-center gap-2 rounded-xl p-3 border transition-all duration-200 cursor-default ${
+                      className={`group flex flex-col items-center gap-2 p-3 border transition-all duration-200 cursor-default ${
                         unlocked
-                          ? "border-orange-200 bg-orange-50 hover:bg-orange-100 hover:border-orange-300"
-                          : "border-gray-100 bg-gray-50 opacity-40"
+                          ? "border-orange-200 dark:border-orange-500/30 bg-orange-50 dark:bg-orange-500/10 hover:bg-orange-100 dark:hover:bg-orange-500/15 hover:border-orange-300 dark:hover:border-orange-500/50"
+                          : "border-gray-100 dark:border-white/6 bg-gray-50 dark:bg-white/3 opacity-40"
                       }`}
                     >
                       <div
-                        className={`w-8 h-8 rounded-lg flex items-center justify-center ${unlocked ? "bg-orange-100" : "bg-gray-100"}`}
+                        className={`w-8 h-8 flex items-center justify-center ${unlocked ? "bg-orange-100 dark:bg-orange-500/20" : "bg-gray-100 dark:bg-white/5"}`}
                       >
                         <Flame
                           className={`w-4 h-4 ${unlocked ? "text-orange-500" : "text-gray-300"}`}

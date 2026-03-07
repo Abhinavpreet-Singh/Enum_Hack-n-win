@@ -1,6 +1,6 @@
-# ENUM360: Production Bug Simulation Platform
+# ENUM: Production Bug Simulation Platform
 
-A modern, interactive learning platform designed to teach developers how to identify, diagnose, and fix real-world production bugs through hands-on simulations. ENUM360 bridges the gap between theoretical programming knowledge and practical debugging skills.
+A modern, interactive learning platform designed to teach developers how to identify, diagnose, and fix real-world production bugs through hands-on simulations. ENUM bridges the gap between theoretical programming knowledge and practical debugging skills.
 
 ## 🎯 Problem We're Solving 
 
@@ -13,7 +13,7 @@ Most programming courses teach syntax and algorithms, but they don't prepare dev
 - **API timeouts** and resource exhaustion
 - **CORS errors** and security misconfiguration
 
-Traditional learning platforms show the bug and solution side-by-side. **ENUM360 does something different**: it places you in a real browser-like sandbox environment where you can see the broken app in action, then fix it and watch it come back to life in real-time.
+Traditional learning platforms show the bug and solution side-by-side. **ENUM does something different**: it places you in a real browser-like sandbox environment where you can see the broken app in action, then fix it and watch it come back to life in real-time.
 
 ## ✨ Key Features
 

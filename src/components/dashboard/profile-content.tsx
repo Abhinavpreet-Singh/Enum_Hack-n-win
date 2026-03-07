@@ -15,7 +15,6 @@ import {
   PlayCircle,
   Star,
   Camera,
-  ExternalLink,
   X,
   Save,
   GraduationCap,
@@ -456,14 +455,21 @@ export default function ProfileContent() {
           {/* LEFT: Profile card */}
           <div className="space-y-4">
             {/* Identity card */}
-            <div className="border border-gray-200 dark:border-white/8 p-6 bg-white/90 dark:bg-[#111] space-y-4">
+            <div className="border border-gray-200 dark:border-white/8 bg-white/90 dark:bg-[#111] overflow-hidden">
+              {/* Profile banner */}
+              <div className="h-20 bg-linear-to-br from-gray-900 via-gray-700 to-black dark:from-zinc-950 dark:via-white/8 dark:to-black relative overflow-hidden">
+                <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(ellipse at 25% 60%, rgba(255,255,255,0.12) 0%, transparent 65%)" }} />
+                <div className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-white/20 to-transparent" />
+              </div>
+              {/* Card content */}
+              <div className="px-6 pb-6 space-y-4">
               {/* Avatar — always clickable */}
-              <div className="flex flex-col items-center gap-3">
+              <div className="flex flex-col items-center gap-3 -mt-10">
                 <div
                   className="relative group cursor-pointer"
                   onClick={() => fileInputRef.current?.click()}
                 >
-                  <div className="w-20 h-20 rounded-full bg-gray-900 flex items-center justify-center overflow-hidden ring-2 ring-gray-200 dark:ring-white/10 group-hover:ring-black dark:group-hover:ring-white transition-all">
+                  <div className="w-24 h-24 rounded-full bg-gray-900 flex items-center justify-center overflow-hidden ring-4 ring-white dark:ring-[#111] shadow-md group-hover:shadow-xl transition-all border border-gray-200 dark:border-white/10">
                     {avatarSrc ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
@@ -472,7 +478,7 @@ export default function ProfileContent() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <span className="text-white text-3xl font-bold select-none">
+                      <span className="text-white text-4xl font-bold select-none">
                         {profile.name.charAt(0).toUpperCase()}
                       </span>
                     )}
@@ -662,7 +668,7 @@ export default function ProfileContent() {
                   {profile.skills.map((sk) => (
                     <span
                       key={sk}
-                      className="flex items-center gap-1 px-2 py-0.5 bg-gray-900 text-white font-mono text-[10px] rounded-md"
+                      className="flex items-center gap-1 px-2.5 py-1 bg-linear-to-r from-gray-800 to-gray-950 dark:from-white/12 dark:to-white/6 text-white dark:text-gray-100 font-mono text-[10px] rounded-full shadow-sm"
                     >
                       {sk}
                       <button
@@ -741,16 +747,15 @@ export default function ProfileContent() {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-wrap gap-2">
                     {profile.links.github && (
                       <a
                         href={profile.links.github}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex items-center gap-1 font-mono text-xs text-gray-500 hover:text-black dark:hover:text-white transition-colors"
+                        className="flex items-center gap-1.5 font-mono text-[10px] px-3 py-1.5 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:border-gray-900 dark:hover:border-white hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all"
                       >
-                        <Github className="w-3.5 h-3.5" /> GitHub{" "}
-                        <ExternalLink className="w-3 h-3" />
+                        <Github className="w-3 h-3" /> GitHub
                       </a>
                     )}
                     {profile.links.linkedin && (
@@ -758,10 +763,9 @@ export default function ProfileContent() {
                         href={profile.links.linkedin}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex items-center gap-1 font-mono text-xs text-gray-500 hover:text-black dark:hover:text-white transition-colors"
+                        className="flex items-center gap-1.5 font-mono text-[10px] px-3 py-1.5 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:border-gray-900 dark:hover:border-white hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all"
                       >
-                        <Linkedin className="w-3.5 h-3.5" /> LinkedIn{" "}
-                        <ExternalLink className="w-3 h-3" />
+                        <Linkedin className="w-3 h-3" /> LinkedIn
                       </a>
                     )}
                     {profile.links.website && (
@@ -769,10 +773,9 @@ export default function ProfileContent() {
                         href={profile.links.website}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex items-center gap-1 font-mono text-xs text-gray-500 hover:text-black dark:hover:text-white transition-colors"
+                        className="flex items-center gap-1.5 font-mono text-[10px] px-3 py-1.5 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:border-gray-900 dark:hover:border-white hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all"
                       >
-                        <Globe className="w-3.5 h-3.5" /> Website{" "}
-                        <ExternalLink className="w-3 h-3" />
+                        <Globe className="w-3 h-3" /> Website
                       </a>
                     )}
                     {profile.resume && (
@@ -780,10 +783,9 @@ export default function ProfileContent() {
                         href={profile.resume}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex items-center gap-1 font-mono text-xs text-gray-500 hover:text-black dark:hover:text-white transition-colors"
+                        className="flex items-center gap-1.5 font-mono text-[10px] px-3 py-1.5 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:border-gray-900 dark:hover:border-white hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all"
                       >
-                        <FileText className="w-3.5 h-3.5" /> Resume{" "}
-                        <ExternalLink className="w-3 h-3" />
+                        <FileText className="w-3 h-3" /> Resume
                       </a>
                     )}
                     {!profile.links.github &&
@@ -796,6 +798,7 @@ export default function ProfileContent() {
                       )}
                   </div>
                 )}
+              </div>
               </div>
             </div>
 
@@ -902,30 +905,39 @@ export default function ProfileContent() {
                   label: "Problems Solved",
                   value: stats.totalProblems > 0 ? stats.totalProblems : "--",
                   icon: Code2,
+                  accent: "text-blue-500 dark:text-blue-400",
+                  bar: "bg-blue-500/30 dark:bg-blue-400/30",
                 },
                 {
                   label: "Simulations",
                   value:
                     stats.totalSimulations > 0 ? stats.totalSimulations : "--",
                   icon: PlayCircle,
+                  accent: "text-violet-500 dark:text-violet-400",
+                  bar: "bg-violet-500/30 dark:bg-violet-400/30",
                 },
                 {
                   label: "Max Streak",
                   value:
                     stats.longestStreak > 0 ? `${stats.longestStreak}d` : "--",
                   icon: Star,
+                  accent: "text-amber-500 dark:text-amber-400",
+                  bar: "bg-amber-500/30 dark:bg-amber-400/30",
                 },
                 {
                   label: "Global Rank",
                   value: stats.globalRank ? `#${stats.globalRank}` : "--",
                   icon: Trophy,
+                  accent: "text-emerald-500 dark:text-emerald-400",
+                  bar: "bg-emerald-500/30 dark:bg-emerald-400/30",
                 },
-              ].map(({ label, value, icon: Icon }) => (
+              ].map(({ label, value, icon: Icon, accent, bar }) => (
                 <div
                   key={label}
-                  className="border border-gray-200 dark:border-white/8 p-4 bg-white/90 dark:bg-[#111] hover:border-black dark:hover:border-white/20 transition-all"
+                  className="border border-gray-200 dark:border-white/8 p-4 bg-white/90 dark:bg-[#111] hover:border-black dark:hover:border-white/20 transition-all relative overflow-hidden"
                 >
-                  <Icon className="w-4 h-4 text-gray-300 mb-2" />
+                  <div className={`absolute top-0 left-0 right-0 h-0.5 ${bar}`} />
+                  <Icon className={`w-4 h-4 ${accent} mb-2`} />
                   <p className="text-2xl font-bold text-black dark:text-white">
                     {value}
                   </p>
@@ -943,11 +955,16 @@ export default function ProfileContent() {
                   <p className="font-mono text-[10px] tracking-widest text-gray-400">
                     ACTIVITY HEATMAP
                   </p>
-                  <p className="text-sm font-bold text-black dark:text-white mt-0.5">
-                    {stats.currentStreak > 0
-                      ? `${stats.currentStreak}-day current streak`
-                      : "Start your streak today"}
-                  </p>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    {stats.currentStreak > 0 && (
+                      <Flame className="w-4 h-4 text-orange-500" />
+                    )}
+                    <p className="text-sm font-bold text-black dark:text-white">
+                      {stats.currentStreak > 0
+                        ? `${stats.currentStreak}-day current streak`
+                        : "Start your streak today"}
+                    </p>
+                  </div>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="font-mono text-[10px] text-gray-400">

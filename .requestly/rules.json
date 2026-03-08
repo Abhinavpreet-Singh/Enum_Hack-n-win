@@ -1,0 +1,249 @@
+[
+  {
+    "id": "enum_redirect_remote_to_local",
+    "name": "🔀 [DEV] Redirect: Render → localhost:8000",
+    "description": "Intercepts all API calls going to the Render backend and sends them to your local backend instead. Enable this when running the backend locally — no need to touch proxy.js.",
+    "ruleType": "REDIRECT",
+    "status": "Active",
+    "isSample": false,
+    "objectType": "rule",
+    "groupId": "enum_dev_group",
+    "pairs": [
+      {
+        "source": {
+          "key": "Url",
+          "operator": "Contains",
+          "value": "enum-backend.onrender.com"
+        },
+        "destination": "http://localhost:8000",
+        "destinationType": "url"
+      }
+    ]
+  },
+
+  {
+    "id": "enum_cors_headers",
+    "name": "🌐 [DEV] Inject CORS headers on localhost:8000 responses",
+    "description": "Adds Access-Control-Allow-Origin header to every localhost:8000 response so the frontend never gets CORS-blocked during development.",
+    "ruleType": "HEADERS",
+    "status": "Active",
+    "isSample": false,
+    "objectType": "rule",
+    "groupId": "enum_dev_group",
+    "pairs": [
+      {
+        "source": {
+          "key": "Url",
+          "operator": "Contains",
+          "value": "localhost:8000"
+        },
+        "modifications": {
+          "Response": [
+            {
+              "header": "Access-Control-Allow-Origin",
+              "value": "http://localhost:3000",
+              "type": "Add"
+            },
+            {
+              "header": "Access-Control-Allow-Credentials",
+              "value": "true",
+              "type": "Add"
+            }
+          ]
+        }
+      }
+    ]
+  },
+
+  {
+    "id": "enum_mock_award_xp",
+    "name": "🧪 [MOCK] Award Browser XP — offline stub",
+    "description": "Returns a fake success response for the award-browser-xp endpoint. Enable when the backend is down and you want to test the XP banner UI in the browser sandbox.",
+    "ruleType": "RESPONSE",
+    "status": "Inactive",
+    "isSample": false,
+    "objectType": "rule",
+    "groupId": "enum_mock_group",
+    "pairs": [
+      {
+        "source": {
+          "key": "Url",
+          "operator": "Contains",
+          "value": "/api/v1/users/award-browser-xp"
+        },
+        "response": {
+          "type": "static",
+          "value": "{\"message\": \"+50 XP awarded!\", \"data\": {\"browserXP\": 150, \"xpAwarded\": 50, \"alreadyAwarded\": false}}",
+          "statusCode": "200"
+        }
+      }
+    ]
+  },
+
+  {
+    "id": "enum_mock_leaderboard",
+    "name": "🧪 [MOCK] Leaderboard — sample data",
+    "description": "Returns 5 fake leaderboard entries. Enable when the DB is empty or backend is down and you want to test LeaderboardPage rendering.",
+    "ruleType": "RESPONSE",
+    "status": "Inactive",
+    "isSample": false,
+    "objectType": "rule",
+    "groupId": "enum_mock_group",
+    "pairs": [
+      {
+        "source": {
+          "key": "Url",
+          "operator": "Contains",
+          "value": "/api/v1/users/leaderboard"
+        },
+        "response": {
+          "type": "static",
+          "value": "{\"message\": \"Leaderboard fetched\", \"data\": [{\"_id\": \"1\", \"username\": \"alice\", \"displayName\": \"Alice\", \"avatar\": \"\", \"xp\": 850, \"problemsSolved\": 12, \"simulationsSolved\": 4}, {\"_id\": \"2\", \"username\": \"bob\", \"displayName\": \"Bob\", \"avatar\": \"\", \"xp\": 620, \"problemsSolved\": 8, \"simulationsSolved\": 3}, {\"_id\": \"3\", \"username\": \"carol\", \"displayName\": \"Carol\", \"avatar\": \"\", \"xp\": 430, \"problemsSolved\": 5, \"simulationsSolved\": 2}, {\"_id\": \"4\", \"username\": \"dan\", \"displayName\": \"Dan\", \"avatar\": \"\", \"xp\": 210, \"problemsSolved\": 3, \"simulationsSolved\": 1}, {\"_id\": \"5\", \"username\": \"eve\", \"displayName\": \"Eve\", \"avatar\": \"\", \"xp\": 100, \"problemsSolved\": 1, \"simulationsSolved\": 0}]}",
+          "statusCode": "200"
+        }
+      }
+    ]
+  },
+
+  {
+    "id": "enum_mock_judge_accepted",
+    "name": "🧪 [MOCK] Judge — force Accepted verdict",
+    "description": "Overrides any judge response to always return 'accepted'. Enable when backend Docker sandbox is unavailable and you want to test the submission flow UI.",
+    "ruleType": "RESPONSE",
+    "status": "Inactive",
+    "isSample": false,
+    "objectType": "rule",
+    "groupId": "enum_mock_group",
+    "pairs": [
+      {
+        "source": {
+          "key": "Url",
+          "operator": "Contains",
+          "value": "/api/v1/judge"
+        },
+        "response": {
+          "type": "static",
+          "value": "{\"message\": \"Judging complete\", \"verdict\": \"accepted\", \"results\": [{\"input\": [\"1\",\"2\"], \"expectedOutput\": \"3\", \"output\": \"3\", \"passed\": true, \"runtime\": 42}], \"passedCount\": 1, \"totalCount\": 1}",
+          "statusCode": "200"
+        }
+      }
+    ]
+  },
+
+  {
+    "id": "enum_delay_complexity",
+    "name": "⏱️ [TEST] Delay complexity route by 2s",
+    "description": "Adds a 2-second artificial delay to the complexity analysis endpoint. Enable to test loading spinners and UX during slow analysis.",
+    "ruleType": "DELAY",
+    "status": "Inactive",
+    "isSample": false,
+    "objectType": "rule",
+    "groupId": "enum_test_group",
+    "pairs": [
+      {
+        "source": {
+          "key": "Url",
+          "operator": "Contains",
+          "value": "/api/v1/complexity"
+        },
+        "delay": 2000
+      }
+    ]
+  },
+
+  {
+    "id": "enum_mock_simulations_list",
+    "name": "🧪 [MOCK] Simulations list — 4 fake sims",
+    "description": "Intercepts GET /api/v1/simulations/getSimulations and returns 4 test simulations (easy backend, medium fullstack, hard devops, easy backend). Enable when the DB has no simulations seeded yet or backend is down — lets you test the listing page filters, sort, search and category chips without real data.",
+    "ruleType": "RESPONSE",
+    "status": "Inactive",
+    "isSample": false,
+    "objectType": "rule",
+    "groupId": "enum_mock_group",
+    "pairs": [
+      {
+        "source": {
+          "key": "Url",
+          "operator": "Contains",
+          "value": "getSimulations"
+        },
+        "response": {
+          "type": "static",
+          "statusCode": "200",
+          "value": "{\"message\":\"Simulations fetched!\",\"data\":[{\"id\":\"sim_mock_001\",\"title\":\"Node API Memory Leak\",\"category\":\"backend\",\"difficulty\":\"easy\",\"description\":\"A Node.js REST API slowly climbs in memory usage until the process crashes. Find and fix the leak.\",\"incident\":\"Production pod restarting every 2 hours — heap usage keeps growing.\",\"estimatedTime\":20,\"xpReward\":50,\"tags\":[\"Node.js\",\"Memory\",\"Express\"]},{\"id\":\"sim_mock_002\",\"title\":\"React + GraphQL N+1 Query\",\"category\":\"fullstack\",\"difficulty\":\"medium\",\"description\":\"Dashboard page takes 8 seconds to load because of N+1 queries hitting the DB on every render.\",\"incident\":\"Users reporting extreme slowness on the analytics dashboard after the v2 release.\",\"estimatedTime\":35,\"xpReward\":100,\"tags\":[\"GraphQL\",\"React\",\"Performance\"]},{\"id\":\"sim_mock_003\",\"title\":\"K8s Pod CrashLoopBackOff\",\"category\":\"devops\",\"difficulty\":\"hard\",\"description\":\"A deployment is stuck in CrashLoopBackOff. Logs show config map missing and liveness probe failing.\",\"incident\":\"Post-deploy rollout broken — 0/3 pods ready, PagerDuty firing.\",\"estimatedTime\":45,\"xpReward\":150,\"tags\":[\"Kubernetes\",\"DevOps\",\"Debugging\"]},{\"id\":\"sim_mock_004\",\"title\":\"PostgreSQL Slow Query\",\"category\":\"backend\",\"difficulty\":\"easy\",\"description\":\"A single endpoint takes 4 seconds per request. EXPLAIN ANALYZE reveals a missing index.\",\"incident\":\"SLA breach on /api/orders — p99 latency spiked from 80ms to 4s after data growth.\",\"estimatedTime\":15,\"xpReward\":50,\"tags\":[\"PostgreSQL\",\"SQL\",\"Indexing\"]}]}"
+        }
+      }
+    ]
+  },
+
+  {
+    "id": "enum_mock_simulation_progress_solved",
+    "name": "🧪 [MOCK] Simulation progress — mark as solved",
+    "description": "Makes every GET /api/v1/simulation-progress/:id return 'solved: true'. Enable to test the solved-state UI (green badge, XP shown) on any simulation detail page without actually completing it.",
+    "ruleType": "RESPONSE",
+    "status": "Inactive",
+    "isSample": false,
+    "objectType": "rule",
+    "groupId": "enum_mock_group",
+    "pairs": [
+      {
+        "source": {
+          "key": "Url",
+          "operator": "Contains",
+          "value": "/api/v1/simulation-progress/"
+        },
+        "response": {
+          "type": "static",
+          "statusCode": "200",
+          "value": "{\"message\":\"Progress fetched!\",\"data\":{\"solved\":true,\"attempts\":3,\"lastAttemptAt\":\"2026-03-08T04:00:00.000Z\"}}"
+        }
+      }
+    ]
+  },
+
+  {
+    "id": "enum_mock_simulation_progress_unsolved",
+    "name": "🧪 [MOCK] Simulation progress — force unsolved (fresh start)",
+    "description": "Makes every simulation progress endpoint return 'solved: false, attempts: 0'. Enable when you want to test the first-time user experience on a sim you've already completed.",
+    "ruleType": "RESPONSE",
+    "status": "Inactive",
+    "isSample": false,
+    "objectType": "rule",
+    "groupId": "enum_mock_group",
+    "pairs": [
+      {
+        "source": {
+          "key": "Url",
+          "operator": "Contains",
+          "value": "/api/v1/simulation-progress/"
+        },
+        "response": {
+          "type": "static",
+          "statusCode": "200",
+          "value": "{\"message\":\"Progress fetched!\",\"data\":{\"solved\":false,\"attempts\":0,\"lastAttemptAt\":null}}"
+        }
+      }
+    ]
+  },
+
+  {
+    "id": "enum_delay_simulations_list",
+    "name": "⏱️ [TEST] Delay simulations list by 3s",
+    "description": "Slows down GET /getSimulations by 3 seconds. Enable to test the skeleton loading state on the simulations listing page — verifies the Loader2 spinner and skeleton cards render correctly.",
+    "ruleType": "DELAY",
+    "status": "Inactive",
+    "isSample": false,
+    "objectType": "rule",
+    "groupId": "enum_test_group",
+    "pairs": [
+      {
+        "source": {
+          "key": "Url",
+          "operator": "Contains",
+          "value": "getSimulations"
+        },
+        "delay": 3000
+      }
+    ]
+  }
+]
